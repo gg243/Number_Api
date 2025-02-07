@@ -94,6 +94,9 @@ def classify_number():
 
     # Return the JSON response
     return jsonify(response), 200
+@app.route('/')
+def home():
+    return jsonify({"message": "Welcome to the Number Classification API!"}), 200
 
 
 if __name__ == '__main__':
