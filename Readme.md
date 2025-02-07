@@ -17,3 +17,4 @@ A simple API that accepts a number and returns interesting mathematical properti
     "digit_sum": 11,
     "fun_fact": "371 is an Armstrong number because 3^3 + 7^3 + 1^3 = 371"
 }
+
