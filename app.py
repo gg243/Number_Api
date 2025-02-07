@@ -55,7 +55,7 @@ def classify_number():
         number = float(number)
     except ValueError:
         # If conversion fails, it's an invalid number
-        return jsonify({"number": number, "error": True, "message": "Invalid input"})
+        return jsonify({"number": number, "error": True, "message": "Invalid input"}), 400
 
     # Initialize the list to store the properties
     properties = []
