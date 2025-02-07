@@ -45,6 +45,10 @@ def classify_number():
     # Get the 'number' from query parameters
     number = request.args.get('number')
 
+    # Check if the 'number' parameter is missing
+    if not number:
+        return jsonify({"error": True, "message": "Missing 'number' parameter"}), 400
+
     # Try to handle both integer and floating-point numbers
     try:
         # Check if the number can be converted to a float
@@ -57,7 +61,6 @@ def classify_number():
     properties = []
 
     # Check if the number is Armstrong, prime, even, or odd
-    # For now, we'll only check Armstrong for integers, as the prime and even/odd check won't apply to floats
     if number.is_integer():
         number = int(number)  # Convert to integer for further checks
 
