@@ -42,19 +42,30 @@ def get_fun_fact(n):
 # API endpoint
 @app.route('/api/classify-number', methods=['GET'])
 def classify_number():
+    # Get the 'number' from query parameters
     number = request.args.get('number')
+
+    # Check if the 'number' is provided and is a valid integer
     if not number or not number.lstrip('-').isdigit():
         return jsonify({"number": number, "error": True}), 400
 
+    # Convert the number to an integer
     number = int(number)
+
+    # Initialize the list to store the properties
     properties = []
+
+    # Check if the number is Armstrong, prime, even, or odd
     if is_armstrong(number):
         properties.append("armstrong")
+    if is_prime(number):
+        properties.append("prime")
     if number % 2 == 0:
         properties.append("even")
     else:
         properties.append("odd")
 
+    # Prepare the response
     response = {
         "number": number,
         "is_prime": is_prime(number),
@@ -63,7 +74,10 @@ def classify_number():
         "digit_sum": digit_sum(number),
         "fun_fact": get_fun_fact(number)
     }
+
+    # Return the JSON response
     return jsonify(response), 200
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)), debug=True)
