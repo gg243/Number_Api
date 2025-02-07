@@ -4,7 +4,7 @@ A simple API that accepts a number and returns interesting mathematical properti
 
 ## Endpoint
 
-- **GET** `/api/funnumber?number={number}`
+- **GET** `/api/classify_number?number={number}
 
 ### Example Response (200 OK)
 
