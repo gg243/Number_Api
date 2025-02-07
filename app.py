@@ -45,35 +45,49 @@ def classify_number():
     # Get the 'number' from query parameters
     number = request.args.get('number')
 
-    # Check if the 'number' is provided and is a valid integer
-    if not number or not number.lstrip('-').isdigit():
-        return jsonify({"number": number, "error": True}), 400
-
-    # Convert the number to an integer
-    number = int(number)
+    # Try to handle both integer and floating-point numbers
+    try:
+        # Check if the number can be converted to a float
+        number = float(number)
+    except ValueError:
+        # If conversion fails, it's an invalid number
+        return jsonify({"number": number, "error": True, "message": "Invalid input"}), 400
 
     # Initialize the list to store the properties
     properties = []
 
     # Check if the number is Armstrong, prime, even, or odd
-    if is_armstrong(number):
-        properties.append("armstrong")
-    if is_prime(number):
-        properties.append("prime")
-    if number % 2 == 0:
-        properties.append("even")
-    else:
-        properties.append("odd")
+    # For now, we'll only check Armstrong for integers, as the prime and even/odd check won't apply to floats
+    if number.is_integer():
+        number = int(number)  # Convert to integer for further checks
 
-    # Prepare the response
-    response = {
-        "number": number,
-        "is_prime": is_prime(number),
-        "is_perfect": is_perfect(number),
-        "properties": properties,
-        "digit_sum": digit_sum(number),
-        "fun_fact": get_fun_fact(number)
-    }
+        # Check Armstrong, prime, even, or odd for integers
+        if is_armstrong(number):
+            properties.append("armstrong")
+        if is_prime(number):
+            properties.append("prime")
+        if number % 2 == 0:
+            properties.append("even")
+        else:
+            properties.append("odd")
+
+        # Prepare the response
+        response = {
+            "number": number,
+            "is_prime": is_prime(number),
+            "is_perfect": is_perfect(number),
+            "properties": properties,
+            "digit_sum": digit_sum(number),
+            "fun_fact": get_fun_fact(number)
+        }
+    else:
+        # For non-integer numbers (float), only the digit sum and fun fact can be returned
+        response = {
+            "number": number,
+            "properties": ["not_integer"],
+            "digit_sum": digit_sum(int(abs(number))),  # Consider absolute value of float for digit sum
+            "fun_fact": "No Armstrong or prime check for floats."
+        }
 
     # Return the JSON response
     return jsonify(response), 200
