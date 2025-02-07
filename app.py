@@ -47,7 +47,7 @@ def classify_number():
 
     # Check if the 'number' parameter is missing
     if not number:
-        return jsonify({"error": True, "message": "Missing 'number' parameter"})
+        return jsonify({"error": True, "message": "Missing 'number' parameter"}), 400
 
     # Try to handle both integer and floating-point numbers
     try:
