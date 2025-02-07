@@ -47,7 +47,7 @@ def classify_number():
 
     # Check if the 'number' parameter is missing
     if not number:
-        return jsonify({"error": True, "message": "Missing 'number' parameter"}), 400
+        return jsonify({"error": True, "message": "Missing 'number' parameter"})
 
     # Try to handle both integer and floating-point numbers
     try:
@@ -55,7 +55,7 @@ def classify_number():
         number = float(number)
     except ValueError:
         # If conversion fails, it's an invalid number
-        return jsonify({"number": number, "error": True, "message": "Invalid input"}), 400
+        return jsonify({"number": number, "error": True, "message": "Invalid input"})
 
     # Initialize the list to store the properties
     properties = []
